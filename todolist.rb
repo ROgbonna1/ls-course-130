@@ -46,6 +46,8 @@ class TodoList
   def size
     @todos.size
   end
+  
+  alias_method :length, :size
 
   def first
     @todos.first
