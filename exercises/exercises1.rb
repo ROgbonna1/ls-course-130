@@ -94,5 +94,73 @@ def count(arr)
   arr.each { |element| count += 1 if yield(element) }
   count
 end
+
+def step(num, fin, step)
+  loop do
+    yield(num)
+    num += step
+    break if num > fin
+  end
+end
+
+def zip(arr1, arr2)
+  arr = []
+  arr1.each_with_index do |num, idx|
+    arr << [num, arr2[idx]]
+  end
+  arr
+end
+
+def map(arr)
+  arr.each_with_object([]) do |item, obj|
+    obj << yield(item)
+  end
+end
+
+def count(*nums)
+  total = 0
+  nums.each { |item, obj| total +=1 if yield(item) }
+  total
+end
+
+def drop_while(arr)
+  placeholder = arr.clone
+  arr.each do |element|
+    placeholder.shift if yield(element)
+    break unless yield(element)
+  end
+  placeholder
+end
+
+def each_with_index(arr)
+  index = 0
+  arr.each do |i|
+    yield(i,index)
+    index += 1
+  end
+end
+
+def each_with_object(arr, obj)
+  arr.each { |item| yield(item, obj) }
+  obj
+end
+
+def max_by(arr)
+  largest = arr[0]
+  arr.each do |element|
+    largest = element if yield(element) > yield(largest)
+  end
+  largest
+end
+
+def each_cons(arr, args)
+  index = 0
+  until index > arr.length - args
+    yield(arr[index], *arr[(index + 1)...(index + args)])
+    index += 1
+  end
+  nil
+end
+
 binding.pry
 puts "hi"
